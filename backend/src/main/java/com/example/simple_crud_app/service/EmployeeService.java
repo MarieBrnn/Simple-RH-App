@@ -31,8 +31,9 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee employee) {
-        if (employee.getId() == null || !employeeRepository.existsById(employee.getId())) {
-            throw  new RuntimeException("Employee not found");
+        Long id = employee.getId();
+        if (id == null || !employeeRepository.existsById(id)) {
+            throw new RuntimeException("Employee not found");
         }
         return employeeRepository.save(employee);
     }
