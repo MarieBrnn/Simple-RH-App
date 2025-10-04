@@ -10,22 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeServiceTest {
+class EmployeeServiceTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
@@ -55,8 +51,10 @@ public class EmployeeServiceTest {
 
         Employee result = employeeService.createEmployee(employee);
 
-        assertThat(result).isNotNull();
-        assertThat(result.getFirstName()).isEqualTo("John");
+        assertThat(result)
+                .isNotNull()
+                .extracting(Employee::getFirstName, Employee::getLastName, Employee::getEmail)
+                .containsExactly("John", "Doe", "john.doe@test.com");
         verify(employeeRepository).save(employee);
     }
 
@@ -69,6 +67,9 @@ public class EmployeeServiceTest {
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getFirstName()).isEqualTo("John");
+
+        verify(employeeRepository).findAll();
+        verify(employeeRepository).findById(1L);
     }
 
     @Test
@@ -88,7 +89,8 @@ public class EmployeeServiceTest {
 
         Employee result = employeeService.updateEmployee(employee);
 
-        assertNotNull(result);
+        assertThat(result).isNotNull();
+        assertThat(result.getSalary()).isEqualByComparingTo("50000");
         verify(employeeRepository).save(employee);
     }
 
