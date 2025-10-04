@@ -98,7 +98,7 @@ public class EmployeeServiceTest {
 
         employeeService.deleteEmployee(1L);
 
-        verify(employeeRepository).delete(employee);
+        verify(employeeRepository).deleteById(employee);
     }
 
     @Test

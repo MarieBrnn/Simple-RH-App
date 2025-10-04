@@ -33,19 +33,19 @@
       "not dead",
       "not op_mini all"
     ],
-    "jest": {
-      "transformIgnorePatterns": [
-        "node_modules/(?!(axios|lucide-react|react-datepicker)/)"
-      ],
-      "moduleNameMapper": {
-        "^axios$": "axios/dist/node/axios.cjs"
-      }
-    },
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios|lucide-react|react-datepicker)/)"
+    ],
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.3"
