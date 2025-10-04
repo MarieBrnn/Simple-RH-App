@@ -94,11 +94,9 @@ public class EmployeeServiceTest {
 
     @Test
     void shouldDeleteEmployee() {
-        when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
-
         employeeService.deleteEmployee(1L);
 
-        verify(employeeRepository).deleteById(employee);
+        verify(employeeRepository).deleteById(1L);
     }
 
     @Test
