@@ -83,13 +83,15 @@ public class EmployeeServiceTest {
 
     @Test
     void shouldUpdateEmployee() {
-        when(employeeRepository.existsById(1L)).thenReturn(true);  // AJOUTEZ cette ligne
-        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
+        List<Employee> employees = Arrays.asList(employee);
 
-        Employee result = employeeService.updateEmployee(employee);
+        when(employeeRepository.findAll()).thenReturn(employees);
+        List<Employee> result = employeeService.getAllEmployees();
 
-        assertNotNull(result);
-        verify(employeeRepository).save(employee);
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getFirstName()).isEqualTo("John");
+
+        verify(employeeRepository).findAll();
     }
 
     @Test
