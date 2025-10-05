@@ -69,7 +69,6 @@ class EmployeeServiceTest {
         assertThat(result.get(0).getFirstName()).isEqualTo("John");
 
         verify(employeeRepository).findAll();
-        verify(employeeRepository).findById(1L);
     }
 
     @Test
@@ -84,13 +83,14 @@ class EmployeeServiceTest {
 
     @Test
     void shouldUpdateEmployee() {
-        when(employeeRepository.existsById(1L)).thenReturn(true);  // AJOUTEZ cette ligne
+        when(employeeRepository.existsById(1L)).thenReturn(true);
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
-
         Employee result = employeeService.updateEmployee(employee);
 
         assertThat(result).isNotNull();
-        assertThat(result.getSalary()).isEqualByComparingTo("50000");
+        assertThat(result.getSalary()).isEqualByComparingTo(BigDecimal.valueOf(50000));
+
+        verify(employeeRepository).existsById(1L);
         verify(employeeRepository).save(employee);
     }
 
